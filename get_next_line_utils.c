@@ -49,15 +49,6 @@ char	*ft_strdup(const char *s)
 	return (res);
 }
 
-void	ft_strfree(char **str)
-{
-	if (str)
-	{
-		free(*str);
-		*str = NULL;
-	}
-}
-
 char	*ft_strchr(const char *s, int c)
 {
 	unsigned int i;

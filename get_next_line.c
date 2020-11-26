@@ -1,5 +1,13 @@
 #include "get_next_line.h"
-#include <stdio.h>
+
+static void	ft_strfree(char **str)
+{
+	if (str)
+	{
+		free(*str);
+		*str = NULL;
+	}
+}
 
 static int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
@@ -9,7 +17,6 @@ static int		ft_memcmp(const void *s1, const void *s2, size_t n)
 
 	if (!s1)
 		return (-1);
-	//printf("%s\n", (char*)s1);
 	s1_ptr = (unsigned char *)s1;
 	s2_ptr = (unsigned char *)s2;
 	i = -1;
@@ -22,7 +29,7 @@ static int		ft_memcmp(const void *s1, const void *s2, size_t n)
 
 static int	extract_line(char **src, char **line)
 {
-	int	len;
+	int		len;
 	char	*temp;
 
 	len = 0;
@@ -42,13 +49,12 @@ static int	extract_line(char **src, char **line)
 		*line = ft_strdup(*src);
 		ft_strfree(src);
 	}
-	//printf("{--%s--}\n", *src);
 	return (1);
 }
 
-static t_lst	*get_correct_file(t_lst **lst, int fd)
+static t_lst	*get_correct_file(t_lst **lst, int fd) 
 {
-	t_lst	*current_fd;	
+	t_lst	*current_fd;
 
 	current_fd = *lst;
 	while (current_fd)
