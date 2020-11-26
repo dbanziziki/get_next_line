@@ -15,7 +15,7 @@ typedef struct		s_lst
 	struct s_lst	*next;
 }			t_lst;
 
-int	get_next_line(int fd, char **line);
+int		get_next_line(int fd, char **line);
 size_t	ft_strlen(const char *s);
 char	*ft_strjoin(char const *s1, char const *s2);
 char	*ft_strdup(const char *s);

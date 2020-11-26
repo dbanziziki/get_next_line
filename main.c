@@ -1,30 +1,21 @@
 #include <stdio.h>
 #include <fcntl.h>
 #include "get_next_line.h"
-int   main(int ac, char **av)
+int main(int ac, char **argv)
 {
-  char  *line;
-  int   fd1;
-  int   fd2;
-  (void)ac;
+	char *line;
+	int fd;
 
-  fd1 = open(av[1], O_RDONLY);
-  fd2 = open(av[2], O_RDONLY);
-  get_next_line(fd1, &line);
-  printf("%s\n", line);
-  get_next_line(fd1, &line);
-  printf("%s\n", line);
-  get_next_line(fd2, &line);
-  printf("%s\n", line);
-  get_next_line(fd2, &line);
-  printf("%s\n", line);
-  get_next_line(fd1, &line);
-  printf("%s\n", line);
-  get_next_line(fd2, &line);
-  printf("%s\n", line);
-  get_next_line(fd1, &line);
-  printf("%s\n", line);
-  get_next_line(fd2, &line);
-  printf("%s\n", line);
-  return (0);
+	(void)ac;
+	if (!(fd = open(argv[1], O_RDONLY)))
+	{
+		printf("Failed to open The file");
+		return (-1);
+	}
+	while (get_next_line(fd, &line) == 1)
+	{
+		printf("%s\n", line);
+		free(line);
+	}
+	return (0);
 }

@@ -1,4 +1,5 @@
 #include "get_next_line.h"
+#include <stdio.h>
 
 static int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
@@ -6,6 +7,9 @@ static int		ft_memcmp(const void *s1, const void *s2, size_t n)
 	unsigned char	*s2_ptr;
 	size_t			i;
 
+	if (!s1)
+		return (-1);
+	//printf("%s\n", (char*)s1);
 	s1_ptr = (unsigned char *)s1;
 	s2_ptr = (unsigned char *)s2;
 	i = -1;
@@ -38,10 +42,11 @@ static int	extract_line(char **src, char **line)
 		*line = ft_strdup(*src);
 		ft_strfree(src);
 	}
+	//printf("{--%s--}\n", *src);
 	return (1);
 }
 
-static t_lst	*get_correct_file(t_lst **lst, char *content, int fd)
+static t_lst	*get_correct_file(t_lst **lst, int fd)
 {
 	t_lst	*current_fd;	
 
@@ -54,7 +59,7 @@ static t_lst	*get_correct_file(t_lst **lst, char *content, int fd)
 	}
 	if (!(current_fd = (t_lst*)malloc(sizeof(t_lst))))
 			return (NULL);
-	current_fd->content = content;	
+	current_fd->content = "\0";	
 	current_fd->fd = fd;
 	current_fd->next = *lst;
 	*lst = current_fd;
@@ -70,11 +75,11 @@ int		get_next_line(int fd, char **line)
 
 	if ((fd < 0 || line == NULL))
 		return (-1);
-	file = get_correct_file(&file, "\0", fd);
+	file = get_correct_file(&file, fd);
 	while ((ret = read(fd, res, BUFF_SIZE)) > 0)
-	{
+	{	
 		res[ret] = '\0';
-		if (!ft_memcmp(file->content, "\0", 1))
+		if (!ft_memcmp(file->content, "\0", 1) || !(file)->content)
 			file->content = ft_strdup(res);
 		else
 		{
