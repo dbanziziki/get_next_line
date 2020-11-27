@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFF_SIZE 1
+# define BUFF_SIZE 1024 
 
 typedef struct		s_lst
 {
@@ -27,7 +27,7 @@ typedef struct		s_lst
 
 int					get_next_line(int fd, char **line);
 size_t				ft_strlen(const char *s);
-char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_strjoin(char *s1, char *s2);
 char				*ft_strdup(const char *s);
 char				*ft_strchr(const char *s, int c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);

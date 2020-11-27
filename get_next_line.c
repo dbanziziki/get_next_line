@@ -86,7 +86,7 @@ static t_lst	*get_correct_file(t_lst **lst, int fd)
 
 int				get_next_line(int fd, char **line)
 {
-	char			res[BUFF_SIZE + 1];
+	char			buffer[BUFF_SIZE + 1];
 	static t_lst	*file;
 	char			*temp_content;
 	int				ret;
@@ -96,14 +96,14 @@ int				get_next_line(int fd, char **line)
 	file = get_correct_file(&file, fd);
 	if (ft_strchr(file->content, '\n'))
 		return (extract_line(&(file->content), line));
-	while ((ret = read(fd, res, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
-		res[ret] = '\0';
+		buffer[ret] = '\0';
 		if (!ft_memcmp(file->content, "\0", 1) || !(file)->content)
-			file->content = ft_strdup(res);
+			file->content = ft_strdup(buffer);
 		else
 		{
-			temp_content = ft_strjoin(file->content, res);
+			temp_content = ft_strjoin(file->content, buffer);
 			free(file->content);
 			file->content = temp_content;
 		}
