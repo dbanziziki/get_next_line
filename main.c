@@ -5,6 +5,7 @@ int main(int ac, char **argv)
 {
 	char *line;
 	int fd;
+	int i;
 
 	(void)ac;
 	if (!(fd = open(argv[1], O_RDONLY)))
@@ -12,9 +13,11 @@ int main(int ac, char **argv)
 		printf("Failed to open The file");
 		return (-1);
 	}
+	i = 0;
 	while (get_next_line(fd, &line) == 1)
 	{
-		printf("%s\n", line);
+		i++;
+		printf("[%d] %s\n",i, line);
 		free(line);
 	}
 	return (0);
