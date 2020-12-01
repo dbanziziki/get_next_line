@@ -4,11 +4,9 @@ RM		= rm -f
 
 CFLAGS = -Wall -Wextra -Werror
 
-CC = clang 
+CC = gcc 
 
 SRCS = get_next_line.c get_next_line_utils.c main.c 
-
-TEST = get_next_line_utils.c test.c main.c 
 
 OBJS = ${SRCS:.c=.o}
 
@@ -17,9 +15,6 @@ ${NAME}: ${OBJS}
 
 san: ${OBJS}
 		${CC} ${CFLAGS} -g -fsanitize=address -fno-omit-frame-pointer ${OBJS} -o ${NAME}
-
-test: ${TEST}
-	${CC} ${CFLAGS} ${TEST} -o ${NAME}
 
 all: ${NAME}
 

@@ -21,24 +21,6 @@ static void		ft_strfree(char **str)
 	}
 }
 
-static int		ft_memcmp(const void *s1, const void *s2, size_t n)
-{
-	unsigned char	*s1_ptr;
-	unsigned char	*s2_ptr;
-	size_t			i;
-
-	if (!s1)
-		return (-1);
-	s1_ptr = (unsigned char *)s1;
-	s2_ptr = (unsigned char *)s2;
-	i = -1;
-	while (++i < n && *(s1_ptr + i) == *(s2_ptr + i))
-		;
-	if (i == n)
-		return (0);
-	return (*(s1_ptr + i) - *(s2_ptr + i));
-}
-
 static int		extract_line(char **src, char **line)
 {
 	int		len;
@@ -64,54 +46,38 @@ static int		extract_line(char **src, char **line)
 	return (1);
 }
 
-static t_lst	*get_correct_file(t_lst **lst, int fd)
+int				return_value(char **file, char **line, int fd, int ret)
 {
-	t_lst	*current_fd;
-
-	current_fd = *lst;
-	while (current_fd)
-	{
-		if (current_fd->fd == fd)
-			return (current_fd);
-		current_fd = current_fd->next;
-	}
-	if (!(current_fd = (t_lst *)malloc(sizeof(t_lst))))
-		return (NULL);
-	current_fd->content = "\0";
-	current_fd->fd = fd;
-	current_fd->next = *lst;
-	*lst = current_fd;
-	return (*lst);
+	if (ret == 0 && file[fd] == NULL)
+		return (0);
+	else
+		return ((ret < 0) ? -1 : extract_line(&file[fd], line));
 }
 
 int				get_next_line(int fd, char **line)
 {
 	char			buffer[BUFF_SIZE + 1];
-	static t_lst	*file;
+	static char		*file[MAX_FD];
 	char			*temp_content;
 	int				ret;
 
-	if ((fd < 0 || line == NULL))
+	if ((fd <= 0 || line == NULL))
 		return (-1);
-	file = get_correct_file(&file, fd);
-	if (ft_strchr(file->content, '\n'))
-		return (extract_line(&(file->content), line));
+	if (ft_strchr(file[fd], '\n'))
+		return (extract_line(&file[fd], line));
 	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
-		if (!ft_memcmp(file->content, "\0", 1) || !(file)->content)
-			file->content = ft_strdup(buffer);
+		if (file[fd] == NULL)
+			file[fd] = ft_strdup(buffer);
 		else
 		{
-			temp_content = ft_strjoin(file->content, buffer);
-			free(file->content);
-			file->content = temp_content;
+			temp_content = ft_strjoin(file[fd], buffer);
+			free(file[fd]);
+			file[fd] = temp_content;
 		}
-		if (ft_strchr(file->content, '\n'))
+		if (ft_strchr(file[fd], '\n'))
 			break ;
 	}
-	if (ret == 0 && file->content == NULL)
-		return (0);
-	else
-		return ((ret < 0) ? -1 : extract_line(&(file->content), line));
+	return (return_value(file, line, fd, ret));
 }
