@@ -2,21 +2,25 @@
 #include <fcntl.h>
 #include "get_next_line.h"
 #include "get_next_line.h"
+#include <fcntl.h>
+#include <stdio.h>
 
-int main(int ac, char **av)
+int		main(int argc, char **argv)
 {
-	char *line;
-	int fd1;
-	int i;
-	(void)ac;
+	int		fd;
+	char	*line;
 
-	i = 0;
-	fd1 = open(av[1], O_RDONLY);
-	while (get_next_line(fd1, &line) == 1)
+	if (argc == 1)
+		fd = 0;
+	else if (argc == 2)
+		fd = open(argv[1], O_RDONLY);
+	else
+		return (2);
+	while (get_next_line(fd, &line) == 1)
 	{
-		i++;
-		printf("[%d] %s\n", i, line);
+		printf("->%s\n", line);	
 		free(line);
 	}
-	return (0);
+	if (argc == 2)
+		close(fd);
 }
