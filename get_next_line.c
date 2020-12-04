@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:40 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/02 01:54:41 by alex             ###   ########.fr       */
+/*   Updated: 2020/12/03 18:58:30 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static int		extract_line(char **src, char **line)
 	{
 		*line = ft_strdup(*src);
 		ft_strfree(src);
+		return (0);
 	}
 	return (1);
 }
@@ -49,7 +50,10 @@ static int		extract_line(char **src, char **line)
 int				return_value(char **file, char **line, int fd, int ret)
 {
 	if (ret == 0 && file[fd] == NULL)
+	{
+		*line = ft_strdup("");
 		return (0);
+	}
 	else
 		return ((ret < 0) ? -1 : extract_line(&file[fd], line));
 }
@@ -61,7 +65,7 @@ int				get_next_line(int fd, char **line)
 	char			*temp_content;
 	int				ret;
 
-	if ((fd <= 0 || line == NULL))
+	if ((fd < 0 || line == NULL))
 		return (-1);
 	if (ft_strchr(file[fd], '\n'))
 		return (extract_line(&file[fd], line));
@@ -81,3 +85,6 @@ int				get_next_line(int fd, char **line)
 	}
 	return (return_value(file, line, fd, ret));
 }
+
+//jaeskim 
+//JaeSeoKim

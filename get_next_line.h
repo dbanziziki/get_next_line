@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:46 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/02 01:54:39 by alex             ###   ########.fr       */
+/*   Updated: 2020/12/03 19:00:13 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define BUFF_SIZE 1024
+# define BUFF_SIZE 9999 
 # define MAX_FD 4096
 
 int					get_next_line(int fd, char **line);

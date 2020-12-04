@@ -6,11 +6,11 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:40 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/02 01:29:01 by alex             ###   ########.fr       */
+/*   Updated: 2020/12/03 18:59:27 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 static void		ft_strfree(char **str)
 {
@@ -42,6 +42,7 @@ static int		extract_line(char **src, char **line)
 	{
 		*line = ft_strdup(*src);
 		ft_strfree(src);
+		return (0);
 	}
 	return (1);
 }
@@ -49,7 +50,10 @@ static int		extract_line(char **src, char **line)
 int				return_value(char **file, char **line, int fd, int ret)
 {
 	if (ret == 0 && file[fd] == NULL)
+	{
+		*line = ft_strdup("");
 		return (0);
+	}
 	else
 		return ((ret < 0) ? -1 : extract_line(&file[fd], line));
 }
