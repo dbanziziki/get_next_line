@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:46 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/03 19:00:13 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/05 11:41:52 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,23 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+#include <stdio.h>
 
-# define BUFF_SIZE 9999 
+#ifndef BUFFER_SIZE
+
+# define BUFFER_SIZE 42 
+
+#endif
+
 # define MAX_FD 4096
+
+typedef struct		s_list
+{
+	char 		*content;
+	char		*next_line;
+	int		fd;
+	struct s_list	*next;
+}			t_list;
 
 int					get_next_line(int fd, char **line);
 size_t				ft_strlen(const char *s);

@@ -6,20 +6,20 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:40 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/03 18:58:30 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/05 11:58:39 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-static void		ft_strfree(char **str)
+/*static void		ft_strfree(char **str)
 {
 	if (str)
 	{
 		free(*str);
 		*str = NULL;
 	}
-}
+}*/
 
 static int		extract_line(char **src, char **line)
 {
@@ -35,13 +35,11 @@ static int		extract_line(char **src, char **line)
 		temp = ft_strdup(&((*src)[len + 1]));
 		free(*src);
 		*src = temp;
-		if ((*src)[0] == '\0')
-			ft_strfree(src);
 	}
 	else
 	{
-		*line = ft_strdup(*src);
-		ft_strfree(src);
+		*line = *src;
+		*src = 0;
 		return (0);
 	}
 	return (1);
@@ -60,7 +58,7 @@ int				return_value(char **file, char **line, int fd, int ret)
 
 int				get_next_line(int fd, char **line)
 {
-	char			buffer[BUFF_SIZE + 1];
+	char			buffer[BUFFER_SIZE + 1];
 	static char		*file[MAX_FD];
 	char			*temp_content;
 	int				ret;
@@ -69,7 +67,7 @@ int				get_next_line(int fd, char **line)
 		return (-1);
 	if (ft_strchr(file[fd], '\n'))
 		return (extract_line(&file[fd], line));
-	while ((ret = read(fd, buffer, BUFF_SIZE)) > 0)
+	while ((ret = read(fd, buffer, BUFFER_SIZE)) > 0)
 	{
 		buffer[ret] = '\0';
 		if (file[fd] == NULL)
