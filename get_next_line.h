@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:46 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/05 11:41:52 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/06 17:18:35 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,17 @@
 
 #ifndef BUFFER_SIZE
 
-# define BUFFER_SIZE 42 
+# define BUFFER_SIZE 42
 
 #endif
 
 # define MAX_FD 4096
 
-typedef struct		s_list
-{
-	char 		*content;
-	char		*next_line;
-	int		fd;
-	struct s_list	*next;
-}			t_list;
-
-int					get_next_line(int fd, char **line);
+int				    get_next_line(int fd, char **line);
+void				*ft_memcpy(void *dest, const void *src, size_t n);
+char				*ft_strndup(const char *s, size_t n);
 size_t				ft_strlen(const char *s);
 char				*ft_strjoin(char *s1, char *s2);
-char				*ft_strdup(const char *s);
 char				*ft_strchr(const char *s, int c);
 char				*ft_substr(char const *s, unsigned int start, size_t len);
 

@@ -6,11 +6,27 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:57 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/03 18:59:35 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/06 17:21:28 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t			i;
+	unsigned char	*ptr_dest;
+	unsigned char	*ptr_src;
+
+	ptr_dest = dest;
+	ptr_src = (unsigned char *)src;
+	i = -1;
+	if (!dest && !src)
+		return (NULL);
+	while (++i < n)
+		*(ptr_dest + i) = *(ptr_src + i);
+	return (dest);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -45,19 +61,14 @@ char	*ft_strjoin(char *s1, char *s2)
 	return (res);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strndup(const char *s, size_t n)
 {
 	char	*res;
-	size_t	len;
-	size_t	i;
 
-	len = ft_strlen(s);
-	i = -1;
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (++i < len)
-		res[i] = ((char *)s)[i];
-	res[i] = '\0';
+	if (!(res = (char*)malloc(sizeof(char) * (n + 1))))
+			return (NULL);
+	ft_memcpy(res, s, n);
+	res[n] = '\0';
 	return (res);
 }
 
@@ -74,22 +85,4 @@ char	*ft_strchr(const char *s, int c)
 			return ((char *)s + i);
 	}
 	return (NULL);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*res;
-	int		i;
-
-	if (!s)
-		return (NULL);
-	i = -1;
-	if (!(res = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	while (++i < (int)len)
-		res[i] = s[start + i];
-	res[i] = '\0';
-	return (res);
 }
