@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:57 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/06 17:21:28 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:01:12 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,21 +43,16 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*res;
 	size_t	i;
 	size_t	j;
-	size_t	index;
 
 	if (!s1 || !s2)
 		return (NULL);
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
-	index = -1;
 	if (!(res = (char *)malloc(sizeof(char) * (i + j) + 1)))
 		return (NULL);
-	while (++index < i)
-		res[index] = s1[index];
-	index = -1;
-	while (++index < j)
-		res[index + i] = s2[index];
-	res[index + i] = 0;
+	ft_memcpy(res, s1, i);
+	ft_memcpy(res + i, s2, j);
+	res[i + j] = 0;
 	return (res);
 }
 
@@ -74,15 +69,11 @@ char	*ft_strndup(const char *s, size_t n)
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned int	i;
-
-	if (!s)
-		return (NULL);
-	i = -1;
-	while (++i < (unsigned int)ft_strlen(s) + 1)
+	while (*s != c)
 	{
-		if (((char *)s)[i] == (char)c)
-			return ((char *)s + i);
+		if (*s == '\0')
+			return (0);
+		s++;
 	}
-	return (NULL);
+	return (char *)s;
 }

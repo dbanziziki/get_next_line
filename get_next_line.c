@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:40 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/08 13:15:50 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/08 14:32:03 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ int				get_next_line(int fd, char **line)
 
 	if ((fd < 0 || line == NULL || fd >= MAX_FD || BUFFER_SIZE <= 0))
 		return (-1);
-	if (ft_strchr(file[fd], '\n'))
-		return (extract_line(&file[fd], line));
 	while ((ret = read(fd, buffer, BUFFER_SIZE)) >= 0)
 	{
 		buffer[ret] = '\0';

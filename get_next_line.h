@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: alex <marvin@42.fr>                        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/11/27 12:35:46 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/08 12:08:22 by dbanzizi         ###   ########.fr       */
+/*   Created: 2020/12/08 14:26:59 by dbanzizi          #+#    #+#             */
+/*   Updated: 2020/12/08 17:52:47 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,10 @@
 
 # include <stdlib.h>
 # include <unistd.h>
-#include <stdio.h>
 
 #ifndef BUFFER_SIZE
 
-# define BUFFER_SIZE 1024
+# define BUFFER_SIZE 9999
 
 #endif
 

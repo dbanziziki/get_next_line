@@ -1,52 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:40 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/05 12:25:31 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/08 14:32:03 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
-
-static t_list		*get_correct_file(t_list **list, int fd)
-{
-	t_list	*temp;
-	t_list	*new;
-
-	temp = *list;
-	while (temp)
-	{
-		if (temp->fd == fd)
-			return (temp);
-		temp = temp->next;
-	}
-	if (!(new = (t_list*)malloc(sizeof(t_list))))
-			return (NULL);
-	new->next = *list;
-	new->fd = fd;
-	new->content = NULL;
-	*list = new;
-	return (new);
-}
+#include "get_next_line.h"
 
 static int		extract_line(char **src, char **line)
 {
-	int		len;
 	char	*temp;
+	char	*temp1;
 
-	len = 0;
-	while ((*src)[len] != '\n' && (*src)[len] != '\0')
-		len++;
-	if ((*src)[len] == '\n')
+	if ((temp = ft_strchr(*src, '\n')))
 	{
-		*line = ft_substr(*src, 0, len);
-		temp = ft_strdup(&((*src)[len + 1]));
+		*line = ft_strndup(*src, temp - *src);
+		temp1 = ft_strndup(temp + 1, ft_strlen(temp + 1));
 		free(*src);
-		*src = temp;
+		*src = temp1;
 	}
 	else
 	{
@@ -57,45 +33,28 @@ static int		extract_line(char **src, char **line)
 	return (1);
 }
 
-int				return_value(char *file, char **line, int ret)
-{
-	if (ret == 0 && file == NULL)
-	{
-		return (0);
-	}
-	else
-		return ((ret < 0) ? -1 : extract_line(&file, line));
-}
-
 int				get_next_line(int fd, char **line)
 {
-	char			*buffer;
-	static t_list		*file;
+	char			buffer[BUFFER_SIZE + 1];
+	static char		*file[MAX_FD];
 	char			*temp_content;
 	int				ret;
 
-	if (fd < 0 || line == NULL || !(buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE + 1)))
+	if ((fd < 0 || line == NULL || fd >= MAX_FD || BUFFER_SIZE <= 0))
 		return (-1);
-	file = get_correct_file(&file, fd);
-	if (ft_strchr(file->content, '\n'))
-		return (extract_line(&file->content, line));
-	while ((ret = read(fd, buffer, BUFFER_SIZE)) > 0)
+	while ((ret = read(fd, buffer, BUFFER_SIZE)) >= 0)
 	{
 		buffer[ret] = '\0';
-		if (file->content == NULL)
-			file->content = ft_strdup(buffer);
+		if (file[fd] == NULL)
+			temp_content = ft_strndup(buffer, ret);
 		else
 		{
-			temp_content = ft_strjoin(file->content, buffer);
-			free(file->content);
-			file->content = temp_content;
+			temp_content = ft_strjoin(file[fd], buffer);
+			free(file[fd]);
 		}
-		if (ft_strchr(file->content, '\n'))
+		file[fd] = temp_content;
+		if (ft_strchr(file[fd], '\n') || ret == 0)
 			break ;
 	}
-	free(buffer);
-	return (return_value(file->content, line, ret));
+	return (ret < 0 ? -1 : extract_line(&file[fd], line));
 }
-
-//jaeskim 
-//JaeSeoKim

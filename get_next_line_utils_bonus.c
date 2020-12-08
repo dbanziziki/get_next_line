@@ -1,16 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
+/*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:57 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/03 18:59:47 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/08 18:01:12 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line_bonus.h"
+#include "get_next_line.h"
+
+void	*ft_memcpy(void *dest, const void *src, size_t n)
+{
+	size_t			i;
+	unsigned char	*ptr_dest;
+	unsigned char	*ptr_src;
+
+	ptr_dest = dest;
+	ptr_src = (unsigned char *)src;
+	i = -1;
+	if (!dest && !src)
+		return (NULL);
+	while (++i < n)
+		*(ptr_dest + i) = *(ptr_src + i);
+	return (dest);
+}
 
 size_t	ft_strlen(const char *s)
 {
@@ -27,69 +43,37 @@ char	*ft_strjoin(char *s1, char *s2)
 	char	*res;
 	size_t	i;
 	size_t	j;
-	size_t	index;
 
 	if (!s1 || !s2)
 		return (NULL);
 	i = ft_strlen(s1);
 	j = ft_strlen(s2);
-	index = -1;
 	if (!(res = (char *)malloc(sizeof(char) * (i + j) + 1)))
 		return (NULL);
-	while (++index < i)
-		res[index] = s1[index];
-	index = -1;
-	while (++index < j)
-		res[index + i] = s2[index];
-	res[index + i] = 0;
+	ft_memcpy(res, s1, i);
+	ft_memcpy(res + i, s2, j);
+	res[i + j] = 0;
 	return (res);
 }
 
-char	*ft_strdup(const char *s)
+char	*ft_strndup(const char *s, size_t n)
 {
 	char	*res;
-	size_t	len;
-	size_t	i;
 
-	len = ft_strlen(s);
-	i = -1;
-	if (!(res = (char *)malloc(sizeof(char) * (len + 1))))
-		return (NULL);
-	while (++i < len)
-		res[i] = ((char *)s)[i];
-	res[i] = '\0';
+	if (!(res = (char*)malloc(sizeof(char) * (n + 1))))
+			return (NULL);
+	ft_memcpy(res, s, n);
+	res[n] = '\0';
 	return (res);
 }
 
 char	*ft_strchr(const char *s, int c)
 {
-	unsigned int	i;
-
-	if (!s)
-		return (NULL);
-	i = -1;
-	while (++i < (unsigned int)ft_strlen(s) + 1)
+	while (*s != c)
 	{
-		if (((char *)s)[i] == (char)c)
-			return ((char *)s + i);
+		if (*s == '\0')
+			return (0);
+		s++;
 	}
-	return (NULL);
-}
-
-char	*ft_substr(char const *s, unsigned int start, size_t len)
-{
-	char	*res;
-	int		i;
-
-	if (!s)
-		return (NULL);
-	i = -1;
-	if (!(res = (char *)malloc(sizeof(char) * len + 1)))
-		return (NULL);
-	if (start >= ft_strlen(s))
-		return (ft_strdup(""));
-	while (++i < (int)len)
-		res[i] = s[start + i];
-	res[i] = '\0';
-	return (res);
+	return (char *)s;
 }
