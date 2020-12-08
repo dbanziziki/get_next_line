@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/27 12:35:46 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/06 17:18:35 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/08 12:08:22 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 #ifndef BUFFER_SIZE
 
-# define BUFFER_SIZE 42
+# define BUFFER_SIZE 1024
 
 #endif
 
