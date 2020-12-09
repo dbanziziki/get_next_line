@@ -35,7 +35,7 @@ static int		extract_line(char **src, char **line)
 
 int				get_next_line(int fd, char **line)
 {
-	char			buffer[BUFFER_SIZE + 1];
+	char			*buffer;
 	static char		*file[MAX_FD];
 	char			*temp_content;
 	int				ret;
@@ -44,6 +44,8 @@ int				get_next_line(int fd, char **line)
 		return (-1);
 	if (ft_strchr(file[fd], '\n'))
 		return (extract_line(&file[fd], line));
+	if (!(buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE + 1)))
+		return (-1);
 	while ((ret = read(fd, buffer, BUFFER_SIZE)) >= 0)
 	{
 		buffer[ret] = '\0';
@@ -58,5 +60,6 @@ int				get_next_line(int fd, char **line)
 		if (ft_strchr(file[fd], '\n') || ret == 0)
 			break ;
 	}
+	free(buffer);
 	return (ret < 0 ? -1 : extract_line(&file[fd], line));
 }

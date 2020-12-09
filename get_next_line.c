@@ -35,28 +35,31 @@ static int		extract_line(char **src, char **line)
 
 int				get_next_line(int fd, char **line)
 {
-	char			buffer[BUFFER_SIZE + 1];
-	static char		*file[MAX_FD];
+	char			*buffer;
+	static char		*file;
 	char			*temp_content;
 	int				ret;
 
 	if ((fd < 0 || line == NULL || fd >= MAX_FD || BUFFER_SIZE <= 0))
 		return (-1);
-	if (ft_strchr(file[fd], '\n'))
-		return (extract_line(&file[fd], line));
+	if (ft_strchr(file, '\n'))
+		return (extract_line(&file, line));
+	if (!(buffer = (char*)malloc(sizeof(char) * BUFFER_SIZE + 1)))
+		return (-1);
 	while ((ret = read(fd, buffer, BUFFER_SIZE)) >= 0)
 	{
 		buffer[ret] = '\0';
-		if (file[fd] == NULL)
+		if (file == NULL)
 			temp_content = ft_strndup(buffer, ret);
 		else
 		{
-			temp_content = ft_strjoin(file[fd], buffer);
-			free(file[fd]);
+			temp_content = ft_strjoin(file, buffer);
+			free(file);
 		}
-		file[fd] = temp_content;
-		if (ft_strchr(file[fd], '\n') || ret == 0)
+		file = temp_content;
+		if (ft_strchr(file, '\n') || ret == 0)
 			break ;
 	}
-	return (ret < 0 ? -1 : extract_line(&file[fd], line));
+	free(buffer);
+	return (ret < 0 ? -1 : extract_line(&file, line));
 }
