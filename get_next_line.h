@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: alex <marvin@42.fr>                        +#+  +:+       +#+        */
+/*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/12/08 14:26:59 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/09 11:09:18 by dbanzizi         ###   ########.fr       */
+/*   Created: 2020/12/12 22:20:47 by dbanzizi          #+#    #+#             */
+/*   Updated: 2020/12/15 23:05:50 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,9 @@
 # define BUFFER_SIZE 42
 # endif
 
-# define MAX_FD 4096
+# ifndef OPEX_MAX
+#  define OPEX_MAX 10240
+# endif
 
 int		get_next_line(int fd, char **line);
 void	*ft_memcpy(void *dest, const void *src, size_t n);
