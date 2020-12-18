@@ -60,6 +60,8 @@ char	*ft_strndup(const char *s, size_t n)
 {
 	char	*res;
 
+	if (!s)
+		return (NULL);
 	if (!(res = (char*)malloc(sizeof(char) * (n + 1))))
 		return (NULL);
 	ft_memcpy(res, s, n);

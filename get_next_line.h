@@ -6,7 +6,7 @@
 /*   By: dbanzizi <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/12/12 22:20:47 by dbanzizi          #+#    #+#             */
-/*   Updated: 2020/12/15 23:05:50 by dbanzizi         ###   ########.fr       */
+/*   Updated: 2020/12/16 14:44:23 by dbanzizi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-# define BUFFER_SIZE 42
+#  define BUFFER_SIZE 42
 # endif
 
 # ifndef OPEX_MAX
