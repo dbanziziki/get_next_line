@@ -59,13 +59,9 @@ static int	extract_line(char **src, char **line)
 		len++;
 	if ((*src)[len] == '\n')
 		return (ft_cpy_line(src, line, len));
-	else
-	{
-		*line = *src;
-		*src = 0;
-		return (0);
-	}
-	return (1);
+	*line = *src;
+	*src = 0;
+	return (0);
 }
 
 int			get_next_line(int fd, char **line)
@@ -73,6 +69,7 @@ int			get_next_line(int fd, char **line)
 	char		*buffer;
 	static char	*file[OPEX_MAX];
 	int			ret;
+	int			err;
 
 	if ((fd < 0 || line == NULL || fd >= OPEX_MAX || BUFFER_SIZE <= 0))
 		return (-1);
@@ -82,8 +79,10 @@ int			get_next_line(int fd, char **line)
 		return (-1);
 	while ((ret = read(fd, buffer, BUFFER_SIZE)) >= 0)
 	{
-		if (save_buffer(&file[fd], buffer, ret) || ret == 0)
+		if ((err = save_buffer(&file[fd], buffer, ret) == 1) || ret == 0)
 			break ;
+		if (err < 0)
+			return (-1);
 	}
 	free(buffer);
 	if (ret < 0)
